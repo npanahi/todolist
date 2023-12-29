@@ -1,0 +1,79 @@
+<html>
+  <head>
+    <title>todolist</title>
+    <style>
+      html {
+        font-size: 30px;
+      }
+      input {
+        padding: 10px;
+      }
+      button {
+        padding: 10px;
+      }
+      ul li {
+        transition: all 300ms;
+      }
+      ul li.done {
+        text-decoration: line-through;
+      }
+    </style>
+  </head>
+  <body>
+    <input class="input" type="text" placeholder="please write your task" />
+    <button class="add">Add</button>
+    <ul class="list">
+      <li>
+        <span><i>jamal</i> <button>x</button></span>
+      </li>
+    </ul>
+    <script>
+      var input = document.querySelector(".input");
+      var btn = document.querySelector(".add");
+      var list = document.querySelector(".list");
+      input.focus();
+      function add() {
+        var value = input.value;
+        if (value.trim() === "") {
+          alert("you should write a test!");
+          return;
+        }
+        if (value.trim().length < 3) {
+          alert("minimum char is 3");
+          return;
+        }
+        var li = document.createElement("li");
+        li.style.opacity = "0";
+        li.innerHTML =
+          "<span> <i>" + input.value + "</i> <button>x</button></span>";
+        list.appendChild(li);
+        setTimeout(function () {
+          li.style.opacity = 1;
+        }, 300);
+
+        input.value = "";
+        input.focus();
+      }
+      btn.addEventListener("click", function () {
+        add();
+      });
+      input.addEventListener("keydown", function (e) {
+        console.log(e);
+        if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
+          add();
+        }
+      });
+      list.addEventListener("click", function (e) {
+        if (e.target.tagName === "I") {
+          e.target.parentNode.parentNode.classList.toggle("done");
+        }
+        if (e.target.tagName === "BUTTON") {
+          e.target.parentNode.parentNode.style.opacity = "0";
+          setTimeout(function () {
+            e.target.parentNode.parentNode.remove();
+          }, 300);
+        }
+      });
+    </script>
+  </body>
+</html>
